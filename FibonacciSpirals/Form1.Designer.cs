@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.graph1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -42,6 +42,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.originTextBoxX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.outBox = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.graph1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,26 +52,26 @@
             this.graph1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.graph1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.graph1.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.graph1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.graph1.Legends.Add(legend4);
             this.graph1.Location = new System.Drawing.Point(12, 70);
             this.graph1.Name = "graph1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.Blue;
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series3.Name = "Points";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series4.Legend = "Legend1";
-            series4.MarkerColor = System.Drawing.Color.Red;
-            series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series4.Name = "Origin";
-            this.graph1.Series.Add(series3);
-            this.graph1.Series.Add(series4);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.Legend = "Legend1";
+            series7.MarkerColor = System.Drawing.Color.Blue;
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series7.Name = "Points";
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series8.Legend = "Legend1";
+            series8.MarkerColor = System.Drawing.Color.Red;
+            series8.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series8.Name = "Origin";
+            this.graph1.Series.Add(series7);
+            this.graph1.Series.Add(series8);
             this.graph1.Size = new System.Drawing.Size(720, 517);
             this.graph1.TabIndex = 0;
             this.graph1.Text = "chart1";
@@ -83,6 +85,7 @@
             this.button2.TabIndex = 18;
             this.button2.Text = "Export to Text";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.printToText);
             // 
             // button1
             // 
@@ -93,7 +96,7 @@
             this.button1.TabIndex = 17;
             this.button1.Text = "Generate Preview";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.generatePreview);
             // 
             // radiusTextBox
             // 
@@ -156,11 +159,33 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Origin";
             // 
+            // outBox
+            // 
+            this.outBox.Location = new System.Drawing.Point(270, 37);
+            this.outBox.Name = "outBox";
+            this.outBox.Size = new System.Drawing.Size(278, 20);
+            this.outBox.TabIndex = 19;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(228, 288);
+            this.progressBar1.MaximumSize = new System.Drawing.Size(0, 23);
+            this.progressBar1.MinimumSize = new System.Drawing.Size(0, 23);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(0, 23);
+            this.progressBar1.TabIndex = 20;
+            this.progressBar1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 599);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.outBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.radiusTextBox);
@@ -190,6 +215,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox originTextBoxX;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox outBox;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

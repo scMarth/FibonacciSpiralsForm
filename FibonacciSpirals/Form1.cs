@@ -7,39 +7,166 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace FibonacciSpirals
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void textBoxError()
         {
+            MessageBox.Show("Error: Please check inputs.");
+        }
+
+        private bool canParseTextBoxToDouble(string str)
+        {
+            double number;
+            bool canConvert = double.TryParse(str, out number);
+            if (canConvert) return true;
+            else return false;
+        }
+
+        private bool canParseTextBoxToInt(string str)
+        {
+            int number;
+            bool canConvert = int.TryParse(str, out number);
+            if (canConvert) return true;
+            else return false;
+        }
+
+        private bool canParseTextBoxes()
+        {
+            bool test1 = canParseTextBoxToInt(originTextBoxX.Text);
+            bool test2 = canParseTextBoxToInt(originTextBoxY.Text);
+            bool test3 = canParseTextBoxToInt(radiusTextBox.Text);
+
+            if (test1 && test2 && test3) return true;
+            else return false;
+        }
+
+        private int getIntFromTextBox(string str)
+        {
+            int number;
+            int.TryParse(str, out number);
+            return number;
+        }
+
+        // Append string 'str' to output file 'filename'
+        private static void appendToFile(string filename, string str)
+        {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter(filename, true))
+            {
+                file.Write(str);
+                file.Flush();
+                file.Close();
+            }
+        }
+
+        private void rescaleResetProgressBar()
+        {
+            // reset the progress bar value to 0
+            progressBar1.Value = 0;
+
+            // rescale the progress bar
+            int thirds = (int)(this.Width / 3);
+            int marginTop = (int)(0.49 * this.Height);
+            progressBar1.Top = marginTop;
+            progressBar1.Left = thirds;
+            progressBar1.Width = thirds;
+        }
+
+        private void printToText(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Text|*.txt";
+            sfd.Title = "Export Text";
+            sfd.ShowDialog();
+
+            var outfile = sfd.FileName;
+
+            if (outfile != "")
+            {
+                // open the file
+                System.IO.File.WriteAllText(outfile, "");
+
+                // reset and rescale the progress bar
+                rescaleResetProgressBar();
+
+                // show the progress bar
+                progressBar1.Visible = true;
+
+                int numPoints = graph1.Series[0].Points.Count();
+
+                // set progress bar maximum
+                progressBar1.Maximum = numPoints;
+
+                DataPoint point;
+                for (int i = 0; i < numPoints; i++)
+                {
+                    point = graph1.Series[0].Points.ElementAt<DataPoint>(i);
+                    double coordX = point.XValue;
+                    double coordY = point.YValues[0];
+
+                    //outBox.Text = "Point: " + point.ToString() + " coordX = " + coordX.ToString() + " coordY " + coordY.ToString();
+
+                    appendToFile(outfile, coordX.ToString() + " " + coordY.ToString() + Environment.NewLine);
+                    progressBar1.Increment(1);
+                }
+
+                // hide the progress bar
+                progressBar1.Visible = false;
+                MessageBox.Show("Done.");
+            }
+            else
+            {
+                MessageBox.Show("Error: Invalid filename. Aborting.");
+            }
+        }
+
+        private void generatePreview(object sender, EventArgs e)
+        {
+            graph1.Series[0].Points.Clear();
+
+            outBox.Text = "";
+            bool inputsOkay = canParseTextBoxes();
+            if (!(inputsOkay))
+            {
+                textBoxError();
+                return;
+            }
+
+            int radius = getIntFromTextBox(radiusTextBox.Text);
+            int arraySize = radius * radius;
+            //outBox.Text = arraySize.ToString();
+
             double tau = (1 + Math.Sqrt(5)) / 2;
 
-            double[] temp = new double[400];
-            double[] theta = new double[400];
-            double[] rad = new double[400];
+            double[] temp = new double[arraySize];
+            double[] theta = new double[arraySize];
+            double[] rad = new double[arraySize];
 
-            double[] deltaX = new double[400];
-            double[] deltaY = new double[400];
+            double[] deltaX = new double[arraySize];
+            double[] deltaY = new double[arraySize];
 
-            double[] ptsX = new double[400];
-            double[] ptsY = new double[400];
+            double[] ptsX = new double[arraySize];
+            double[] ptsY = new double[arraySize];
 
-            double origX = 508000;
-            double origY = 4475000;
+            double origX = getIntFromTextBox(originTextBoxX.Text);
+            double origY = getIntFromTextBox(originTextBoxY.Text);
 
             double minx = 0, maxx = 0, miny = 0, maxy = 0;
 
             // Add the origin
             graph1.Series[1].Points.AddXY(origX, origY);
 
-            for (int i=1; i<=400; i++)
+            for (int i=1; i<= arraySize; i++)
             {
                 temp[i-1] = i;
                 theta[i-1] = temp[i-1]*(2*Math.PI)/tau;
@@ -85,7 +212,6 @@ namespace FibonacciSpirals
             // Allow user selection for Zoom
             graph1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             graph1.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
-
         }
     }
 }
