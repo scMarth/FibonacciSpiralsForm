@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -42,8 +36,8 @@ namespace FibonacciSpirals
 
         private bool canParseTextBoxes()
         {
-            bool test1 = canParseTextBoxToInt(originTextBoxX.Text);
-            bool test2 = canParseTextBoxToInt(originTextBoxY.Text);
+            bool test1 = canParseTextBoxToDouble(originTextBoxX.Text);
+            bool test2 = canParseTextBoxToDouble(originTextBoxY.Text);
             bool test3 = canParseTextBoxToInt(radiusTextBox.Text);
 
             if (test1 && test2 && test3) return true;
@@ -54,6 +48,13 @@ namespace FibonacciSpirals
         {
             int number;
             int.TryParse(str, out number);
+            return number;
+        }
+
+        private double getDoubleFromTextBox(string str)
+        {
+            double number;
+            double.TryParse(str, out number);
             return number;
         }
 
@@ -71,10 +72,10 @@ namespace FibonacciSpirals
 
         private void rescaleResetProgressBar()
         {
-            // reset the progress bar value to 0
+            // Reset the progress bar value to 0
             progressBar1.Value = 0;
 
-            // rescale the progress bar
+            // Rescale the progress bar
             int thirds = (int)(this.Width / 3);
             int marginTop = (int)(0.49 * this.Height);
             progressBar1.Top = marginTop;
@@ -93,18 +94,18 @@ namespace FibonacciSpirals
 
             if (outfile != "")
             {
-                // open the file
+                // Open the file
                 System.IO.File.WriteAllText(outfile, "");
 
-                // reset and rescale the progress bar
+                // Reset and rescale the progress bar
                 rescaleResetProgressBar();
 
-                // show the progress bar
+                // Show the progress bar
                 progressBar1.Visible = true;
 
                 int numPoints = graph1.Series[0].Points.Count();
 
-                // set progress bar maximum
+                // Set progress bar maximum
                 progressBar1.Maximum = numPoints;
 
                 DataPoint point;
@@ -114,13 +115,11 @@ namespace FibonacciSpirals
                     double coordX = point.XValue;
                     double coordY = point.YValues[0];
 
-                    //outBox.Text = "Point: " + point.ToString() + " coordX = " + coordX.ToString() + " coordY " + coordY.ToString();
-
                     appendToFile(outfile, coordX.ToString() + " " + coordY.ToString() + Environment.NewLine);
                     progressBar1.Increment(1);
                 }
 
-                // hide the progress bar
+                // Hide the progress bar
                 progressBar1.Visible = false;
                 MessageBox.Show("Done.");
             }
@@ -132,9 +131,10 @@ namespace FibonacciSpirals
 
         private void generatePreview(object sender, EventArgs e)
         {
+            // Clear the coordinates before generating new ones
             graph1.Series[0].Points.Clear();
 
-            outBox.Text = "";
+            // Make sure the inputs are all valid integer values
             bool inputsOkay = canParseTextBoxes();
             if (!(inputsOkay))
             {
@@ -144,7 +144,6 @@ namespace FibonacciSpirals
 
             int radius = getIntFromTextBox(radiusTextBox.Text);
             int arraySize = radius * radius;
-            //outBox.Text = arraySize.ToString();
 
             double tau = (1 + Math.Sqrt(5)) / 2;
 
@@ -158,8 +157,9 @@ namespace FibonacciSpirals
             double[] ptsX = new double[arraySize];
             double[] ptsY = new double[arraySize];
 
-            double origX = getIntFromTextBox(originTextBoxX.Text);
-            double origY = getIntFromTextBox(originTextBoxY.Text);
+            // Retrieve the coordinates for the origin
+            double origX = getDoubleFromTextBox(originTextBoxX.Text);
+            double origY = getDoubleFromTextBox(originTextBoxY.Text);
 
             double minx = 0, maxx = 0, miny = 0, maxy = 0;
 
@@ -195,8 +195,6 @@ namespace FibonacciSpirals
                 graph1.Series[0].Points.AddXY(ptsX[i-1], ptsY[i-1]);
                 graph1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             }
-
-            //textBox1.Text = "minx = " + minx.ToString() + " | maxx = " + maxx.ToString() + " | miny = " + miny.ToString() + " | maxy = " + maxy.ToString();
 
             graph1.ChartAreas[0].AxisX.IsStartedFromZero = false;
             graph1.ChartAreas[0].AxisY.IsStartedFromZero = false;
