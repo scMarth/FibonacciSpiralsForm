@@ -357,5 +357,11 @@ namespace FibonacciSpirals
         {
             setButton1(1);
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked) graph1.Visible = true;
+            else graph1.Visible = false;
+        }
     }
 }
