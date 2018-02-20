@@ -47,6 +47,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.multiplierBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.graph1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,9 +100,9 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(140, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "Generate Preview";
+            this.button1.Text = "Compute";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.generatePreview);
+            this.button1.Click += new System.EventHandler(this.compute);
             // 
             // radiusTextBox
             // 
@@ -211,11 +213,34 @@
             this.label6.TabIndex = 23;
             this.label6.Text = "Multiplier";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(458, 44);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 24;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(389, 41);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 20);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Preview";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 599);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.multiplierBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -255,6 +280,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox multiplierBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label7;
     }
 }
 
