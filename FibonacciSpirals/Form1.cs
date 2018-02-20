@@ -15,6 +15,7 @@ namespace FibonacciSpirals
             InitializeComponent();
 
             button2.Enabled = false;
+            setButton1(0);
         }
 
         private void textBoxError()
@@ -141,6 +142,8 @@ namespace FibonacciSpirals
 
             hasComputed = true;
             button2.Enabled = true;
+            button2.ForeColor = Color.Green;
+            setButton1(0);
         }
 
         private void computeWithoutPreview()
@@ -212,6 +215,7 @@ namespace FibonacciSpirals
         {
             // Clear the coordinates before generating new ones
             graph1.Series[0].Points.Clear();
+            graph1.Series[1].Points.Clear();
 
             // Make sure the inputs are all valid integer values
             bool inputsOkay = canParseTextBoxes();
@@ -267,12 +271,8 @@ namespace FibonacciSpirals
                 deltaX[i - 1] = (Math.Cos(theta[i - 1])) * rad[i - 1];
                 deltaY[i - 1] = (Math.Sin(theta[i - 1])) * rad[i - 1];
 
-                ptsX[i - 1] = deltaX[i - 1] + origX;
-                ptsY[i - 1] = deltaY[i - 1] + origY;
-
-                // Apply the multiplier
-                ptsX[i - 1] = scaler * ptsX[i - 1];
-                ptsY[i - 1] = scaler * ptsY[i - 1];
+                ptsX[i - 1] = (scaler * deltaX[i - 1]) + origX;
+                ptsY[i - 1] = (scaler * deltaY[i - 1]) + origY;
 
                 graph1.Series[0].Points.AddXY(ptsX[i - 1], ptsY[i - 1]);
                 progressBar1.Increment(1);
@@ -331,5 +331,36 @@ namespace FibonacciSpirals
             }
         }
 
+        private void setButton1(int flag)
+        {
+            if (flag == 0) // Color it green
+            {
+                button1.ForeColor = Color.Green;
+            }
+            else // Color it red
+            {
+                button1.ForeColor = Color.Red;
+            }
+        }
+
+        private void originTextBoxX_TextChanged(object sender, EventArgs e)
+        {
+            setButton1(1);
+        }
+
+        private void originTextBoxY_TextChanged(object sender, EventArgs e)
+        {
+            setButton1(1);
+        }
+
+        private void radiusTextBox_TextChanged(object sender, EventArgs e)
+        {
+            setButton1(1);
+        }
+
+        private void multiplierBox_TextChanged(object sender, EventArgs e)
+        {
+            setButton1(1);
+        }
     }
 }

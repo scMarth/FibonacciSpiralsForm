@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.graph1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -57,26 +57,26 @@
             this.graph1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.graph1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.graph1.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.graph1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.graph1.Legends.Add(legend4);
             this.graph1.Location = new System.Drawing.Point(12, 70);
             this.graph1.Name = "graph1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Legend = "Legend1";
-            series1.MarkerColor = System.Drawing.Color.Blue;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series1.Name = "Points";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Legend = "Legend1";
-            series2.MarkerColor = System.Drawing.Color.Red;
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "Origin";
-            this.graph1.Series.Add(series1);
-            this.graph1.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.Legend = "Legend1";
+            series7.MarkerColor = System.Drawing.Color.Blue;
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series7.Name = "Points";
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series8.Legend = "Legend1";
+            series8.MarkerColor = System.Drawing.Color.Red;
+            series8.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series8.Name = "Origin";
+            this.graph1.Series.Add(series7);
+            this.graph1.Series.Add(series8);
             this.graph1.Size = new System.Drawing.Size(720, 517);
             this.graph1.TabIndex = 0;
             this.graph1.Text = "chart1";
@@ -110,6 +110,7 @@
             this.radiusTextBox.Name = "radiusTextBox";
             this.radiusTextBox.Size = new System.Drawing.Size(68, 20);
             this.radiusTextBox.TabIndex = 3;
+            this.radiusTextBox.TextChanged += new System.EventHandler(this.radiusTextBox_TextChanged);
             // 
             // label4
             // 
@@ -127,6 +128,7 @@
             this.originTextBoxY.Name = "originTextBoxY";
             this.originTextBoxY.Size = new System.Drawing.Size(68, 20);
             this.originTextBoxY.TabIndex = 2;
+            this.originTextBoxY.TextChanged += new System.EventHandler(this.originTextBoxY_TextChanged);
             // 
             // label3
             // 
@@ -154,6 +156,7 @@
             this.originTextBoxX.Name = "originTextBoxX";
             this.originTextBoxX.Size = new System.Drawing.Size(68, 20);
             this.originTextBoxX.TabIndex = 1;
+            this.originTextBoxX.TextChanged += new System.EventHandler(this.originTextBoxX_TextChanged);
             // 
             // label1
             // 
@@ -202,6 +205,7 @@
             this.multiplierBox.Name = "multiplierBox";
             this.multiplierBox.Size = new System.Drawing.Size(68, 20);
             this.multiplierBox.TabIndex = 4;
+            this.multiplierBox.TextChanged += new System.EventHandler(this.multiplierBox_TextChanged);
             // 
             // label6
             // 
