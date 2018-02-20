@@ -38,7 +38,7 @@ namespace FibonacciSpirals
         {
             bool test1 = canParseTextBoxToDouble(originTextBoxX.Text);
             bool test2 = canParseTextBoxToDouble(originTextBoxY.Text);
-            bool test3 = canParseTextBoxToInt(radiusTextBox.Text);
+            bool test3 = canParseTextBoxToDouble(radiusTextBox.Text);
 
             if (test1 && test2 && test3) return true;
             else return false;
@@ -142,8 +142,9 @@ namespace FibonacciSpirals
                 return;
             }
 
-            int radius = getIntFromTextBox(radiusTextBox.Text);
-            int arraySize = radius * radius;
+            double radius = getDoubleFromTextBox(radiusTextBox.Text);
+            int arraySize = Convert.ToInt32(Math.Floor(radius * radius));
+            numPoints.Text = arraySize.ToString();
 
             double tau = (1 + Math.Sqrt(5)) / 2;
 

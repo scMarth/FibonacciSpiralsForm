@@ -43,6 +43,8 @@
             this.originTextBoxX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.numPoints = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.graph1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -171,11 +173,31 @@
             this.progressBar1.TabIndex = 20;
             this.progressBar1.Visible = false;
             // 
+            // numPoints
+            // 
+            this.numPoints.Location = new System.Drawing.Point(286, 43);
+            this.numPoints.Name = "numPoints";
+            this.numPoints.ReadOnly = true;
+            this.numPoints.Size = new System.Drawing.Size(68, 20);
+            this.numPoints.TabIndex = 21;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(210, 39);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 20);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "# Points";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 599);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.numPoints);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -207,6 +229,8 @@
         private System.Windows.Forms.TextBox originTextBoxX;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.TextBox numPoints;
+        private System.Windows.Forms.Label label5;
     }
 }
 
