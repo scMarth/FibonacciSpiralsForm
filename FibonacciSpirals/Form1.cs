@@ -23,7 +23,8 @@ namespace FibonacciSpirals
             MessageBox.Show("Error: Please check inputs.");
         }
 
-        private bool canParseTextBoxToDouble(string str)
+        // Return true if the input string can be parsed into a double
+        private bool canParseStringToDouble(string str)
         {
             double number;
             bool canConvert = double.TryParse(str, out number);
@@ -31,7 +32,7 @@ namespace FibonacciSpirals
             else return false;
         }
 
-        private bool canParseTextBoxToInt(string str)
+        private bool canParseStringToInt(string str)
         {
             int number;
             bool canConvert = int.TryParse(str, out number);
@@ -41,10 +42,10 @@ namespace FibonacciSpirals
 
         private bool canParseTextBoxes()
         {
-            bool test1 = canParseTextBoxToDouble(originTextBoxX.Text);
-            bool test2 = canParseTextBoxToDouble(originTextBoxY.Text);
-            bool test3 = canParseTextBoxToDouble(radiusTextBox.Text);
-            bool test4 = canParseTextBoxToDouble(multiplierBox.Text);
+            bool test1 = canParseStringToDouble(originTextBoxX.Text);
+            bool test2 = canParseStringToDouble(originTextBoxY.Text);
+            bool test3 = canParseStringToDouble(radiusTextBox.Text);
+            bool test4 = canParseStringToDouble(multiplierBox.Text);
 
             if (test1 && test2 && test3 && test4) return true;
             else return false;
@@ -197,12 +198,8 @@ namespace FibonacciSpirals
                 deltaX[i - 1] = (Math.Cos(theta[i - 1])) * rad[i - 1];
                 deltaY[i - 1] = (Math.Sin(theta[i - 1])) * rad[i - 1];
 
-                ptsX[i - 1] = deltaX[i - 1] + origX;
-                ptsY[i - 1] = deltaY[i - 1] + origY;
-
-                // Apply the multiplier
-                ptsX[i - 1] = scaler * ptsX[i - 1];
-                ptsY[i - 1] = scaler * ptsY[i - 1];
+                ptsX[i - 1] = (scaler * deltaX[i - 1]) + origX;
+                ptsY[i - 1] = (scaler * deltaY[i - 1]) + origY;
 
                 progressBar1.Increment(1);
             }
@@ -300,6 +297,7 @@ namespace FibonacciSpirals
         Point? prevPosition = null;
         ToolTip tooltip = new ToolTip();
 
+        // Display the coordinates of a point when the user hovers over one
         void chart1_MouseMove(object sender, MouseEventArgs e)
         {
             var pos = e.Location;
@@ -319,7 +317,7 @@ namespace FibonacciSpirals
                         var pointXPixel = result.ChartArea.AxisX.ValueToPixelPosition(prop.XValue);
                         var pointYPixel = result.ChartArea.AxisY.ValueToPixelPosition(prop.YValues[0]);
 
-                        // check if the cursor is really close to the point (2 pixels around the point)
+                        // Check if the cursor is really close to the point (2 pixels around the point)
                         if (Math.Abs(pos.X - pointXPixel) < 2 &&
                             Math.Abs(pos.Y - pointYPixel) < 2)
                         {
@@ -331,17 +329,14 @@ namespace FibonacciSpirals
             }
         }
 
+        // Helper function to color the compute button
         private void setButton1(int flag)
         {
-            if (flag == 0) // Color it green
-            {
-                button1.ForeColor = Color.Green;
-            }
-            else // Color it red
-            {
-                button1.ForeColor = Color.Red;
-            }
+            if (flag == 0) button1.ForeColor = Color.Green; // Color the text green
+            else button1.ForeColor = Color.Red; // Color the text red
         }
+
+        // When any of the input text fields are changed, color the Compute button in red to imply the changed arguments
 
         private void originTextBoxX_TextChanged(object sender, EventArgs e)
         {
