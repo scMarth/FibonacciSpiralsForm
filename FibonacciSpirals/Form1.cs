@@ -164,6 +164,8 @@ namespace FibonacciSpirals
 
             double minx = 0, maxx = 0, miny = 0, maxy = 0;
 
+            graph1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+
             // Add the origin
             graph1.Series[1].Points.AddXY(origX, origY);
 
@@ -194,7 +196,6 @@ namespace FibonacciSpirals
                 }
 
                 graph1.Series[0].Points.AddXY(ptsX[i-1], ptsY[i-1]);
-                graph1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             }
 
             graph1.ChartAreas[0].AxisX.IsStartedFromZero = false;
