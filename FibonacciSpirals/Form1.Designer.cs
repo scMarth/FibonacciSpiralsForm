@@ -45,6 +45,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.numPoints = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.multiplierBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.graph1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,6 +78,7 @@
             this.graph1.Size = new System.Drawing.Size(720, 517);
             this.graph1.TabIndex = 0;
             this.graph1.Text = "chart1";
+            this.graph1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseMove);
             // 
             // button2
             // 
@@ -83,7 +86,7 @@
             this.button2.Location = new System.Drawing.Point(592, 41);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 23);
-            this.button2.TabIndex = 18;
+            this.button2.TabIndex = 6;
             this.button2.Text = "Export to Text";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.printToText);
@@ -94,17 +97,17 @@
             this.button1.Location = new System.Drawing.Point(592, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(140, 23);
-            this.button1.TabIndex = 17;
+            this.button1.TabIndex = 5;
             this.button1.Text = "Generate Preview";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.generatePreview);
             // 
             // radiusTextBox
             // 
-            this.radiusTextBox.Location = new System.Drawing.Point(286, 11);
+            this.radiusTextBox.Location = new System.Drawing.Point(290, 11);
             this.radiusTextBox.Name = "radiusTextBox";
             this.radiusTextBox.Size = new System.Drawing.Size(68, 20);
-            this.radiusTextBox.TabIndex = 16;
+            this.radiusTextBox.TabIndex = 3;
             // 
             // label4
             // 
@@ -121,7 +124,7 @@
             this.originTextBoxY.Location = new System.Drawing.Point(98, 41);
             this.originTextBoxY.Name = "originTextBoxY";
             this.originTextBoxY.Size = new System.Drawing.Size(68, 20);
-            this.originTextBoxY.TabIndex = 14;
+            this.originTextBoxY.TabIndex = 2;
             // 
             // label3
             // 
@@ -148,7 +151,7 @@
             this.originTextBoxX.Location = new System.Drawing.Point(98, 9);
             this.originTextBoxX.Name = "originTextBoxX";
             this.originTextBoxX.Size = new System.Drawing.Size(68, 20);
-            this.originTextBoxX.TabIndex = 11;
+            this.originTextBoxX.TabIndex = 1;
             // 
             // label1
             // 
@@ -175,7 +178,7 @@
             // 
             // numPoints
             // 
-            this.numPoints.Location = new System.Drawing.Point(286, 43);
+            this.numPoints.Location = new System.Drawing.Point(461, 11);
             this.numPoints.Name = "numPoints";
             this.numPoints.ReadOnly = true;
             this.numPoints.Size = new System.Drawing.Size(68, 20);
@@ -185,17 +188,36 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(210, 39);
+            this.label5.Location = new System.Drawing.Point(389, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 20);
             this.label5.TabIndex = 22;
             this.label5.Text = "# Points";
+            // 
+            // multiplierBox
+            // 
+            this.multiplierBox.Location = new System.Drawing.Point(290, 43);
+            this.multiplierBox.Name = "multiplierBox";
+            this.multiplierBox.Size = new System.Drawing.Size(68, 20);
+            this.multiplierBox.TabIndex = 4;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(210, 41);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(71, 20);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Multiplier";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 599);
+            this.Controls.Add(this.multiplierBox);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.numPoints);
             this.Controls.Add(this.progressBar1);
@@ -231,6 +253,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox numPoints;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox multiplierBox;
+        private System.Windows.Forms.Label label6;
     }
 }
 

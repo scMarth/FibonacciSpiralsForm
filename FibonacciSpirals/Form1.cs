@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing;
 
 namespace FibonacciSpirals
 {
@@ -39,19 +40,20 @@ namespace FibonacciSpirals
             bool test1 = canParseTextBoxToDouble(originTextBoxX.Text);
             bool test2 = canParseTextBoxToDouble(originTextBoxY.Text);
             bool test3 = canParseTextBoxToDouble(radiusTextBox.Text);
+            bool test4 = canParseTextBoxToDouble(multiplierBox.Text);
 
-            if (test1 && test2 && test3) return true;
+            if (test1 && test2 && test3 && test4) return true;
             else return false;
         }
 
-        private int getIntFromTextBox(string str)
+        private int getIntFromString(string str)
         {
             int number;
             int.TryParse(str, out number);
             return number;
         }
 
-        private double getDoubleFromTextBox(string str)
+        private double getDoubleFromString(string str)
         {
             double number;
             double.TryParse(str, out number);
@@ -142,9 +144,12 @@ namespace FibonacciSpirals
                 return;
             }
 
-            double radius = getDoubleFromTextBox(radiusTextBox.Text);
+            double radius = getDoubleFromString(radiusTextBox.Text);
             int arraySize = Convert.ToInt32(Math.Floor(radius * radius));
             numPoints.Text = arraySize.ToString();
+
+            // Retrieve the multiplier
+            double scaler = getDoubleFromString(multiplierBox.Text);
 
             double tau = (1 + Math.Sqrt(5)) / 2;
 
@@ -158,9 +163,12 @@ namespace FibonacciSpirals
             double[] ptsX = new double[arraySize];
             double[] ptsY = new double[arraySize];
 
+
+
+
             // Retrieve the coordinates for the origin
-            double origX = getDoubleFromTextBox(originTextBoxX.Text);
-            double origY = getDoubleFromTextBox(originTextBoxY.Text);
+            double origX = getDoubleFromString(originTextBoxX.Text);
+            double origY = getDoubleFromString(originTextBoxY.Text);
 
             double minx = 0, maxx = 0, miny = 0, maxy = 0;
 
@@ -169,10 +177,10 @@ namespace FibonacciSpirals
             // Add the origin
             graph1.Series[1].Points.AddXY(origX, origY);
 
-            for (int i=1; i<= arraySize; i++)
+            for (int i = 1; i <= arraySize; i++)
             {
-                temp[i-1] = i;
-                theta[i-1] = temp[i-1]*(2*Math.PI)/tau;
+                temp[i - 1] = i;
+                theta[i - 1] = temp[i - 1] * (2 * Math.PI) / tau;
                 rad[i - 1] = Math.Sqrt(temp[i - 1]);
 
                 deltaX[i - 1] = (Math.Cos(theta[i - 1])) * rad[i - 1];
@@ -181,13 +189,18 @@ namespace FibonacciSpirals
                 ptsX[i - 1] = deltaX[i - 1] + origX;
                 ptsY[i - 1] = deltaY[i - 1] + origY;
 
+                // Apply the multiplier
+                ptsX[i - 1] = scaler * ptsX[i - 1];
+                ptsY[i - 1] = scaler * ptsY[i - 1];
+
                 if (i == 1)
                 {
-                    minx = ptsX[i-1];
+                    minx = ptsX[i - 1];
                     maxx = ptsX[i - 1];
                     miny = ptsY[i - 1];
                     maxy = ptsY[i - 1];
-                }else
+                }
+                else
                 {
                     if (ptsX[i - 1] < minx) minx = ptsX[i - 1];
                     if (ptsX[i - 1] < maxx) maxx = ptsX[i - 1];
@@ -195,7 +208,7 @@ namespace FibonacciSpirals
                     if (ptsY[i - 1] < maxy) maxy = ptsY[i - 1];
                 }
 
-                graph1.Series[0].Points.AddXY(ptsX[i-1], ptsY[i-1]);
+                graph1.Series[0].Points.AddXY(ptsX[i - 1], ptsY[i - 1]);
             }
 
             graph1.ChartAreas[0].AxisX.IsStartedFromZero = false;
@@ -213,5 +226,40 @@ namespace FibonacciSpirals
             graph1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             graph1.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
         }
+
+        Point? prevPosition = null;
+        ToolTip tooltip = new ToolTip();
+
+        void chart1_MouseMove(object sender, MouseEventArgs e)
+        {
+            var pos = e.Location;
+            if (prevPosition.HasValue && pos == prevPosition.Value)
+                return;
+            tooltip.RemoveAll();
+            prevPosition = pos;
+            var results = graph1.HitTest(pos.X, pos.Y, false,
+                                            ChartElementType.DataPoint);
+            foreach (var result in results)
+            {
+                if (result.ChartElementType == ChartElementType.DataPoint)
+                {
+                    var prop = result.Object as DataPoint;
+                    if (prop != null)
+                    {
+                        var pointXPixel = result.ChartArea.AxisX.ValueToPixelPosition(prop.XValue);
+                        var pointYPixel = result.ChartArea.AxisY.ValueToPixelPosition(prop.YValues[0]);
+
+                        // check if the cursor is really close to the point (2 pixels around the point)
+                        if (Math.Abs(pos.X - pointXPixel) < 2 &&
+                            Math.Abs(pos.Y - pointYPixel) < 2)
+                        {
+                            tooltip.Show("X=" + prop.XValue + ", Y=" + prop.YValues[0], this.graph1,
+                                            pos.X, pos.Y - 15);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
