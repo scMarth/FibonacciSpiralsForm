@@ -149,6 +149,8 @@ namespace FibonacciSpirals
 
         private void computeWithoutPreview()
         {
+            hasComputed = false;
+
             // Make sure the inputs are all valid integer values
             bool inputsOkay = canParseTextBoxes();
             if (!(inputsOkay))
@@ -166,46 +168,58 @@ namespace FibonacciSpirals
 
             double tau = (1 + Math.Sqrt(5)) / 2;
 
-            double[] temp = new double[arraySize];
-            double[] theta = new double[arraySize];
-            double[] rad = new double[arraySize];
-
-            double[] deltaX = new double[arraySize];
-            double[] deltaY = new double[arraySize];
-
-            double[] ptsX = new double[arraySize];
-            double[] ptsY = new double[arraySize];
 
             // Retrieve the coordinates for the origin
             double origX = getDoubleFromString(originTextBoxX.Text);
             double origY = getDoubleFromString(originTextBoxY.Text);
 
-            // Reset and rescale the progress bar
-            rescaleResetProgressBar();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Text|*.txt";
+            sfd.Title = "Export Text";
+            sfd.ShowDialog();
 
-            // Show the progress bar
-            progressBar1.Visible = true;
+            var outfile = sfd.FileName;
 
-            // Set progress bar maximum
-            progressBar1.Maximum = arraySize;
-
-            for (int i = 1; i <= arraySize; i++)
+            if (outfile != "")
             {
-                temp[i - 1] = i;
-                theta[i - 1] = temp[i - 1] * (2 * Math.PI) / tau;
-                rad[i - 1] = Math.Sqrt(temp[i - 1]);
+                // Open the file
+                System.IO.File.WriteAllText(outfile, "");
 
-                deltaX[i - 1] = (Math.Cos(theta[i - 1])) * rad[i - 1];
-                deltaY[i - 1] = (Math.Sin(theta[i - 1])) * rad[i - 1];
+                // Reset and rescale the progress bar
+                rescaleResetProgressBar();
 
-                ptsX[i - 1] = (scaler * deltaX[i - 1]) + origX;
-                ptsY[i - 1] = (scaler * deltaY[i - 1]) + origY;
+                // Show the progress bar
+                progressBar1.Visible = true;
 
-                progressBar1.Increment(1);
+                // Set progress bar maximum
+                progressBar1.Maximum = arraySize;
+
+                double temp, theta, rad, deltaX, deltaY, ptX, ptY;
+
+                for (int i = 1; i <= arraySize; i++)
+                {
+                    temp = i;
+                    theta = temp * (2 * Math.PI) / tau;
+                    rad = Math.Sqrt(temp);
+
+                    deltaX = (Math.Cos(theta)) * rad;
+                    deltaY = (Math.Sin(theta)) * rad;
+
+                    ptX = (scaler * deltaX) + origX;
+                    ptY = (scaler * deltaY) + origY;
+
+                    appendToFile(outfile, ptX.ToString() + " " + ptY.ToString() + Environment.NewLine);
+                    progressBar1.Increment(1);
+                }
+
+                // Hide the progress bar
+                progressBar1.Visible = false;
+                MessageBox.Show("Done.");
             }
-
-            // Hide the progress bar
-            progressBar1.Visible = false;
+            else
+            {
+                MessageBox.Show("Error: Invalid filename. Aborting.");
+            }
         }
 
         private void generatePreview()
@@ -360,8 +374,20 @@ namespace FibonacciSpirals
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked) graph1.Visible = true;
-            else graph1.Visible = false;
+            if (checkBox1.Checked)
+            {
+                graph1.Visible = true;
+                button1.Text = "Generate Preview";
+                button2.Visible = true;
+                if (hasComputed) button2.Enabled = true;
+            }
+            else
+            {
+                graph1.Visible = false;
+                button2.Enabled = false;
+                button2.Visible = false;
+                button1.Text = "Compute and Save";
+            }
         }
     }
 }
