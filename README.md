@@ -26,4 +26,4 @@ Once the parameters are inputted, press the "Generate Preview" button to see a p
 
 If you want to export the coordinates, you can click the "Export to Text" button after the parameters have been inputted. This will allow you to save a text file containing the coordinates. The resulting text file has 1 coordinate per line: each line contains first the x-coordinate of a point, then a space, then the y-coordinate of the point.
 
-Note that you don't need to generate a preview before exporting the coordinates as a text file, which would be useful when dealing with large radii, where rendering many points could take a long time.
+Note that you don't need to generate a preview before exporting the coordinates as a text file, which would be useful when dealing with large radii, where rendering many points could take a long time. There is also a checkbox to disable the preview, which also prevents rendering (or re-rendering) of the points.
